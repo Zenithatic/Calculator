@@ -1,5 +1,6 @@
 // Import necessary libraries
 import javax.swing.*;
+import javax.tools.Tool;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -9,13 +10,18 @@ public class Calculator extends JFrame implements ActionListener{
     public JButton[][] buttonRows = new JButton[5][4];
     public JTextField text = new JTextField();
 
+    public static void main(String[] args) {
+        // Create new calculator instance
+        Calculator calc = new Calculator();
+    }
+
     public Calculator(){
 
         // Declare variables
         JPanel[] panelRows = new JPanel[6];
 
         // Create new instance of the calculator gui
-        calculator= new JFrame("Solitaire");
+        calculator = this;
         calculator.setTitle("Calculator");
         calculator.setSize(new Dimension(400, 600));
         calculator.setVisible(true);
@@ -68,56 +74,80 @@ public class Calculator extends JFrame implements ActionListener{
             }
         }
 
-
-
         // Revalidate and repaint the gui
         calculator.invalidate();
         calculator.repaint();
         calculator.revalidate();
-
     }
 
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == buttonRows[0][3]) {
-            text.setText(text.getText() + "+");
-        } else if (e.getSource() == buttonRows[1][0]) {
-            text.setText(text.getText() + "1");
+        if (e.getSource() == buttonRows[0][0]){
+            text.setText("");
+        }
+        else if (e.getSource() == buttonRows[0][1]) {
+            if (text.getText().length() >= 1){
+                text.setText(text.getText().substring(0, text.getText().length()-1));
+            }
+        }
+        else if (e.getSource() == buttonRows[0][2]) {
+            // Verify if user actually wants to exit
+            Toolkit.getDefaultToolkit().beep();
 
-        } else if (e.getSource() == buttonRows[1][1]) {
+            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit confirmation", JOptionPane.YES_NO_CANCEL_OPTION);
+            
+            if (option == 0){
+                System.exit(0);
+            }
+        }
+        else if (e.getSource() == buttonRows[0][3]) {
+            text.setText(text.getText() + "+");
+        }
+        else if (e.getSource() == buttonRows[1][0]) {
+            text.setText(text.getText() + "1");
+        }
+        else if (e.getSource() == buttonRows[1][1]) {
             text.setText(text.getText() + "2");
-        } else if (e.getSource() == buttonRows[1][2]) {
+        }
+        else if (e.getSource() == buttonRows[1][2]) {
             text.setText(text.getText() + "3");
-        } else if (e.getSource() == buttonRows[1][3]) {
+        }
+        else if (e.getSource() == buttonRows[1][3]) {
             text.setText(text.getText() + "-");
-        } else if (e.getSource() == buttonRows[2][0]) {
+        }
+        else if (e.getSource() == buttonRows[2][0]) {
             text.setText(text.getText() + "4");
-        } else if (e.getSource() == buttonRows[2][1]) {
+        }
+        else if (e.getSource() == buttonRows[2][1]) {
             text.setText(text.getText() + "5");
-        } else if (e.getSource() == buttonRows[2][2]) {
+        }
+        else if (e.getSource() == buttonRows[2][2]) {
             text.setText(text.getText() + "6");
-        } else if (e.getSource() == buttonRows[2][3]) {
+        }
+        else if (e.getSource() == buttonRows[2][3]) {
             text.setText(text.getText() + "*");
-        } else if (e.getSource() == buttonRows[3][0]) {
+        }
+        else if (e.getSource() == buttonRows[3][0]) {
             text.setText(text.getText() + "7");
-        } else if (e.getSource() == buttonRows[3][1]) {
+        }
+        else if (e.getSource() == buttonRows[3][1]) {
             text.setText(text.getText() + "8");
-        } else if (e.getSource() == buttonRows[3][2]) {
+        }
+        else if (e.getSource() == buttonRows[3][2]) {
             text.setText(text.getText() + "9");
-        } else if (e.getSource() == buttonRows[3][3]) {
+        }
+        else if (e.getSource() == buttonRows[3][3]) {
             text.setText(text.getText() + "/");
-        } else if (e.getSource() == buttonRows[4][0]) {
+        }
+        else if (e.getSource() == buttonRows[4][0]) {
             text.setText(text.getText() + ".");
-        } else if (e.getSource() == buttonRows[4][1]) {
+        }
+        else if (e.getSource() == buttonRows[4][1]) {
             text.setText(text.getText() + "0");
-        } else if (e.getSource() == buttonRows[4][2]) {
+        }
+        else if (e.getSource() == buttonRows[4][2]) {
             text.setText(text.getText() + "%");
         }
-    }
-
-    public static void main(String[] args) {
-        //Creates a new Main Menu
-       Calculator calc = new Calculator();
 
     }
 }
