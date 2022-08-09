@@ -1,6 +1,5 @@
 // Import necessary libraries
 import javax.swing.*;
-import javax.tools.Tool;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -33,7 +32,6 @@ public class Calculator extends JFrame implements ActionListener{
         panelRows[0] = textPanel;
 
         // Add text window to first panel
-
         text.setEditable(true);
         text.setFont(new Font("Consolas", Font.PLAIN, 24));
         text.setText("");
@@ -80,8 +78,10 @@ public class Calculator extends JFrame implements ActionListener{
         calculator.revalidate();
     }
 
-
     public void actionPerformed(ActionEvent e) {
+        // Remove syntax error text
+        text.setText(text.getText().replace("Syntax Error", ""));
+
         if (e.getSource() == buttonRows[0][0]){
             text.setText("");
         }
@@ -95,7 +95,7 @@ public class Calculator extends JFrame implements ActionListener{
             Toolkit.getDefaultToolkit().beep();
 
             int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit confirmation", JOptionPane.YES_NO_CANCEL_OPTION);
-            
+
             if (option == 0){
                 System.exit(0);
             }
@@ -148,6 +148,70 @@ public class Calculator extends JFrame implements ActionListener{
         else if (e.getSource() == buttonRows[4][2]) {
             text.setText(text.getText() + "%");
         }
+        else if (e.getSource() == buttonRows[4][3]) {
+            text.setText(eval(text.getText()));
+        }
+    }
 
+    public String eval(String string){
+        // Check for invalid syntax first
+
+        // Check if string starts and ends with a number
+        try{
+            Integer.parseInt(String.valueOf(string.charAt(0)));
+            Integer.parseInt(String.valueOf(string.charAt(string.length() - 1)));
+        }
+        catch (Exception e){
+            return "Syntax Error";
+        }
+
+        // Check for preceding operators because they are syntax errors
+        // -- and ++ are valid preceding operators while **, //, *-, %%, etc are not
+        for (int i = 0; i < string.length() - 1; i++){
+            char character = string.charAt(i);
+
+            if (isNonNumerical(character)){
+                // If operator is + or -
+                if (character == '+' || character == '-'){
+                    // Loop to check for invalid preceding operators
+                    for (int j = i + 1; j < string.length(); j++){
+                        char character2 = string.charAt(j);
+                        if (isNonNumerical(character2)){
+                            if (character2 != '+' && character2 != '-'){
+                                return "Syntax Error";
+                            }
+                        }
+                        else{
+                            break;
+                        }
+                    }
+                }
+                // If operator is not + or -
+                if (character != '+' && character != '-'){
+                    // Loop to check for invalid preceding operators
+                    for (int j = i + 1; j < string.length(); j++){
+                        char character2 = string.charAt(j);
+                        if (isNonNumerical(character2)){
+                            return "Syntax Error";
+                        }
+                        else{
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return "Valid Syntax";
+    }
+
+    public boolean isNonNumerical(char character){
+        try{
+            Integer.parseInt(String.valueOf(character));
+            return false;
+        }
+        catch (Exception e){
+            return true;
+        }
     }
 }
