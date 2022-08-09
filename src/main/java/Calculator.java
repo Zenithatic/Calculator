@@ -1,16 +1,23 @@
 // Import necessary libraries
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Calculator extends JFrame{
-    public static void main(String[] args){
+
+public class Calculator extends JFrame implements ActionListener{
+    public JButton button;
+    public JFrame calculator;
+    public  JButton[][] buttonRows = new JButton[5][4];
+    public JTextField text = new JTextField();
+  public Calculator(){
 
         // Declare variables
         JPanel[] panelRows = new JPanel[6];
-        JButton[][] buttonRows = new JButton[5][4];
+
 
         // Create new instance of the calculator gui
-        Calculator calculator = new Calculator();
+      calculator= new JFrame("Solitaire");
         calculator.setTitle("Calculator");
         calculator.setSize(new Dimension(400, 600));
         calculator.setVisible(true);
@@ -22,10 +29,10 @@ public class Calculator extends JFrame{
         panelRows[0] = textPanel;
 
         // Add text window to first panel
-        JTextField text = new JTextField();
-        text.setEditable(false);
+
+        text.setEditable(true);
         text.setFont(new Font("Consolas", Font.PLAIN, 24));
-        text.setText("Placeholder text");
+        text.setText("");
         text.setHorizontalAlignment(SwingConstants.RIGHT);
         textPanel.add(text);
 
@@ -42,6 +49,7 @@ public class Calculator extends JFrame{
                 buttonRows[i-1][j] = new JButton();
                 buttonRows[i-1][j].setFont(new Font("Consolas", Font.PLAIN, 24));
                 panelRows[i].add(buttonRows[i-1][j]);
+
             }
 
             // Add panel to main frame
@@ -55,15 +63,65 @@ public class Calculator extends JFrame{
         // Set button text
         for (int i = 0; i <= 4; i++){
             for (int j = 0; j <= 3; j++){
-                JButton button = buttonRows[i][j];
+                button = buttonRows[i][j];
                 button.setText(buttonTextList[tempIndex]);
+                button.addActionListener(this);
                 tempIndex++;
             }
         }
+
+
 
         // Revalidate and repaint the gui
         calculator.invalidate();
         calculator.repaint();
         calculator.revalidate();
+
     }
+
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == buttonRows[0][3]) {
+            text.setText(text.getText() + "+");
+        } else if (e.getSource() == buttonRows[1][0]) {
+            text.setText(text.getText() + "1");
+
+        } else if (e.getSource() == buttonRows[1][1]) {
+            text.setText(text.getText() + "2");
+        } else if (e.getSource() == buttonRows[1][2]) {
+            text.setText(text.getText() + "3");
+        } else if (e.getSource() == buttonRows[1][3]) {
+            text.setText(text.getText() + "-");
+        } else if (e.getSource() == buttonRows[2][0]) {
+            text.setText(text.getText() + "4");
+        } else if (e.getSource() == buttonRows[2][1]) {
+            text.setText(text.getText() + "5");
+        } else if (e.getSource() == buttonRows[2][2]) {
+            text.setText(text.getText() + "6");
+        } else if (e.getSource() == buttonRows[2][3]) {
+            text.setText(text.getText() + "*");
+        } else if (e.getSource() == buttonRows[3][0]) {
+            text.setText(text.getText() + "7");
+        } else if (e.getSource() == buttonRows[3][1]) {
+            text.setText(text.getText() + "8");
+        } else if (e.getSource() == buttonRows[3][2]) {
+            text.setText(text.getText() + "9");
+        } else if (e.getSource() == buttonRows[3][3]) {
+            text.setText(text.getText() + "/");
+        } else if (e.getSource() == buttonRows[4][0]) {
+            text.setText(text.getText() + ".");
+        } else if (e.getSource() == buttonRows[4][1]) {
+            text.setText(text.getText() + "0");
+        } else if (e.getSource() == buttonRows[4][2]) {
+            text.setText(text.getText() + "%");
+        }
+    }
+
+    public static void main(String[] args) {
+        //Creates a new Main Menu
+       Calculator calc = new Calculator();
+
+    }
+
+
 }
