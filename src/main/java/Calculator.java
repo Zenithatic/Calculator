@@ -1,23 +1,21 @@
 // Import necessary libraries
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
+import java.awt.event.*;
 
 public class Calculator extends JFrame implements ActionListener{
     public JButton button;
     public JFrame calculator;
-    public  JButton[][] buttonRows = new JButton[5][4];
+    public JButton[][] buttonRows = new JButton[5][4];
     public JTextField text = new JTextField();
-  public Calculator(){
+
+    public Calculator(){
 
         // Declare variables
         JPanel[] panelRows = new JPanel[6];
 
-
         // Create new instance of the calculator gui
-      calculator= new JFrame("Solitaire");
+        calculator= new JFrame("Solitaire");
         calculator.setTitle("Calculator");
         calculator.setSize(new Dimension(400, 600));
         calculator.setVisible(true);
@@ -122,6 +120,4 @@ public class Calculator extends JFrame implements ActionListener{
        Calculator calc = new Calculator();
 
     }
-
-
 }
