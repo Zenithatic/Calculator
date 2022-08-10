@@ -81,6 +81,7 @@ public class Calculator extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         // Remove syntax error text
         text.setText(text.getText().replace("Syntax Error", ""));
+        text.setText(text.getText().replace("Valid Syntax", ""));
 
         if (e.getSource() == buttonRows[0][0]){
             text.setText("");
