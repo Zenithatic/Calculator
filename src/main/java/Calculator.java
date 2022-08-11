@@ -79,10 +79,6 @@ public class Calculator extends JFrame implements ActionListener{
     }
 
     public void actionPerformed(ActionEvent e) {
-        // Remove syntax error text
-        text.setText(text.getText().replace("Syntax Error", ""));
-        text.setText(text.getText().replace("Valid Syntax", ""));
-
         if (e.getSource() == buttonRows[0][0]){
             text.setText("");
         }
@@ -203,7 +199,44 @@ public class Calculator extends JFrame implements ActionListener{
             }
         }
 
-        return "Valid Syntax";
+        // Simplify substrings like "--" into "+"
+        String newString = "";
+
+        for (int i = 0; i < string.length(); i++){
+            if (string.charAt(i) != '-' && string.charAt(i) != '+'){
+                newString += String.valueOf(string.charAt(i));
+            }
+            else{
+                char plusminus = string.charAt(i);
+                for (int j = i + 1; j < string.length(); j++){
+                    if (string.charAt(j) != '-' && string.charAt(j) != '+'){
+                        newString += String.valueOf(plusminus);
+                        break;
+                    }
+                    else {
+                        if (plusminus == '-' && string.charAt(j) == '-'){
+                            plusminus = '+';
+                            System.out.println("sus");
+                        }
+                        else if (plusminus == '-' && string.charAt(j) == '+'){
+                            plusminus = '-';
+                            System.out.println("sus1");
+                        }
+                        else if (plusminus == '+' && string.charAt(j) == '-'){
+                            plusminus = '-';
+                            System.out.println("sus2");
+                        }
+                        else if (plusminus == '+' && string.charAt(j) == '+'){
+                            plusminus = '+';
+                            System.out.println("sus3");
+                        }
+                        i++;
+                    }
+                }
+            }
+        }
+
+        return newString;
     }
 
     public boolean isNonNumerical(char character){
