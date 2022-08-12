@@ -79,6 +79,9 @@ public class Calculator extends JFrame implements ActionListener{
     }
 
     public void actionPerformed(ActionEvent e) {
+        // Replace Syntax text
+        text.setText(text.getText().replace("Syntax Error", ""));
+
         if (e.getSource() == buttonRows[0][0]){
             text.setText("");
         }
@@ -216,19 +219,15 @@ public class Calculator extends JFrame implements ActionListener{
                     else {
                         if (plusminus == '-' && string.charAt(j) == '-'){
                             plusminus = '+';
-                            System.out.println("sus");
                         }
                         else if (plusminus == '-' && string.charAt(j) == '+'){
                             plusminus = '-';
-                            System.out.println("sus1");
                         }
                         else if (plusminus == '+' && string.charAt(j) == '-'){
                             plusminus = '-';
-                            System.out.println("sus2");
                         }
                         else if (plusminus == '+' && string.charAt(j) == '+'){
                             plusminus = '+';
-                            System.out.println("sus3");
                         }
                         i++;
                     }
