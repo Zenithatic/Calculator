@@ -235,7 +235,58 @@ public class Calculator extends JFrame implements ActionListener{
             }
         }
 
-        return newString;
+        // Perform arithmetic
+        String newString1 = newString + "";
+
+        // Calculate * and / first (BEDMAS) then add to a new string variable
+        for (int i = 1; i < newString1.length() - 1; i++){
+            if (newString1.charAt(i) == '*' || newString1.charAt(i) == '/' || newString1.charAt(i) == '%'){
+                char operator = newString1.charAt(i);
+
+                // Find number on the left
+                String num1 = "";
+                for (int j = i - 1; j >= 0; j--){
+                    if (isNonDecimal(newString1.charAt(j))){
+                        break;
+                    }
+                    else{
+                        num1 = newString1.charAt(j) + num1;
+                    }
+                }
+
+                // Find number on the right
+                String num2 = "";
+                for (int j = i + 1; j < newString1.length(); j++){
+                    if (isNonDecimal(newString1.charAt(j))){
+                        break;
+                    }
+                    else{
+                        num2 = num2 + newString1.charAt(j);
+                        i++;
+                    }
+                }
+
+                // Calculate and add value to new string
+                if (operator == '*'){
+                    double value = Double.parseDouble(num1) * Double.parseDouble(num2);
+                    newString1 = newString1.replaceFirst(num1 + "\\*" + num2, String.valueOf(value));
+                    i = 1;
+                }
+                else if (operator == '/'){
+                    double value = Double.parseDouble(num1) / Double.parseDouble(num2);
+                    System.out.println(value);
+                    newString1 = newString1.replaceFirst(num1 + "/" + num2, String.valueOf(value));
+                    i = 1;
+                }
+                else if (operator == '%'){
+                    double value = Double.parseDouble(num1) % Double.parseDouble(num2);
+                    newString1 = newString1.replaceFirst(num1 + "%" + num2, String.valueOf(value));
+                    i = 1;
+                }
+            }
+        }
+
+        return newString1;
     }
 
     public boolean isNonNumerical(char character){
@@ -245,6 +296,15 @@ public class Calculator extends JFrame implements ActionListener{
         }
         catch (Exception e){
             return true;
+        }
+    }
+
+    public boolean isNonDecimal(char character){
+        if (character == '*' || character == '/' || character == '%' || character == '+' || character == '-'){
+            return true;
+        }
+        else{
+            return false;
         }
     }
 }
