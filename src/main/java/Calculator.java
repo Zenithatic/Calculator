@@ -268,18 +268,17 @@ public class Calculator extends JFrame implements ActionListener{
 
                 // Calculate and add value to new string
                 if (operator == '*'){
-                    double value = Double.parseDouble(num1) * Double.parseDouble(num2);
+                    String value = String.format("%.4f", Double.parseDouble(num1) * Double.parseDouble(num2));
                     newString1 = newString1.replaceFirst(num1 + "\\*" + num2, String.valueOf(value));
                     i = 1;
                 }
                 else if (operator == '/'){
-                    double value = Double.parseDouble(num1) / Double.parseDouble(num2);
-                    System.out.println(value);
+                    String value = String.format("%.4f", Double.parseDouble(num1) / Double.parseDouble(num2));
                     newString1 = newString1.replaceFirst(num1 + "/" + num2, String.valueOf(value));
                     i = 1;
                 }
                 else if (operator == '%'){
-                    double value = Double.parseDouble(num1) % Double.parseDouble(num2);
+                    String value = String.format("%.4f", Double.parseDouble(num1) % Double.parseDouble(num2));
                     newString1 = newString1.replaceFirst(num1 + "%" + num2, String.valueOf(value));
                     i = 1;
                 }
