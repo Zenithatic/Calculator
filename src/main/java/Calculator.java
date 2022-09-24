@@ -25,6 +25,7 @@ public class Calculator extends JFrame implements ActionListener{
         calculator.setSize(new Dimension(400, 600));
         calculator.setVisible(true);
         calculator.setLayout(new GridLayout(6, 0));
+        calculator.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         // Create special panel for text zone
         JPanel textPanel = new JPanel(new GridLayout(0, 1));
@@ -268,18 +269,60 @@ public class Calculator extends JFrame implements ActionListener{
 
                 // Calculate and add value to new string
                 if (operator == '*'){
-                    String value = String.format("%.4f", Double.parseDouble(num1) * Double.parseDouble(num2));
+                    String value = String.format("%.20f", Double.parseDouble(num1) * Double.parseDouble(num2));
                     newString1 = newString1.replaceFirst(num1 + "\\*" + num2, String.valueOf(value));
                     i = 1;
                 }
                 else if (operator == '/'){
-                    String value = String.format("%.4f", Double.parseDouble(num1) / Double.parseDouble(num2));
+                    String value = String.format("%.20f", Double.parseDouble(num1) / Double.parseDouble(num2));
                     newString1 = newString1.replaceFirst(num1 + "/" + num2, String.valueOf(value));
                     i = 1;
                 }
                 else if (operator == '%'){
-                    String value = String.format("%.4f", Double.parseDouble(num1) % Double.parseDouble(num2));
+                    String value = String.format("%.20f", Double.parseDouble(num1) % Double.parseDouble(num2));
                     newString1 = newString1.replaceFirst(num1 + "%" + num2, String.valueOf(value));
+                    i = 1;
+                }
+            }
+        }
+
+        // Finish + and - operators
+        for (int i = 1; i < newString1.length() - 1; i++){
+            if (newString1.charAt(i) == '+' || newString1.charAt(i) == '-'){
+                char operator = newString1.charAt(i);
+
+                // Find number on the left
+                String num1 = "";
+                for (int j = i - 1; j >= 0; j--){
+                    if (newString1.charAt(j) != '+' && newString1.charAt(j) != '-'){
+                        num1 = String.valueOf(newString1.charAt(j)) + num1;
+                    }
+                    else{
+                        break;
+                    }
+                }
+
+                // Find number on the right
+                String num2 = "";
+
+                for (int j = i + 1; j < newString1.length(); j++){
+                    if (newString1.charAt(j) != '+' && newString1.charAt(j) != '-'){
+                        num2 = num2 + String.valueOf(newString1.charAt(j));
+                    }
+                    else{
+                        break;
+                    }
+                }
+
+                // Calculate and add value to string
+                if (operator == '+'){
+                    String value = String.format("%.5f", Double.parseDouble(num1) + Double.parseDouble(num2));
+                    newString1 = newString1.replaceFirst(num1 + "\\+" + num2, String.valueOf(value));
+                    i = 1;
+                }
+                else if (operator == '-'){
+                    String value = String.format("%.5f", Double.parseDouble(num1) - Double.parseDouble(num2));
+                    newString1 = newString1.replaceFirst(num1 + "-" + num2, String.valueOf(value));
                     i = 1;
                 }
             }
