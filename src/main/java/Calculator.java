@@ -331,6 +331,7 @@ public class Calculator extends JFrame implements ActionListener{
         return newString1;
     }
 
+    // Method to determine if a character is not a numerical value
     public boolean isNonNumerical(char character){
         try{
             Integer.parseInt(String.valueOf(character));
@@ -341,6 +342,7 @@ public class Calculator extends JFrame implements ActionListener{
         }
     }
 
+    // Method to determine if a character is a mathematical operator
     public boolean isNonDecimal(char character){
         if (character == '*' || character == '/' || character == '%' || character == '+' || character == '-'){
             return true;
